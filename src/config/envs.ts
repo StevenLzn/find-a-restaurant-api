@@ -3,6 +3,8 @@ import * as joi from 'joi';
 
 interface EnvVars {
   API_PORT: number;
+  JWT_SECRET: string;
+  JWT_EXPIRATION: number;
   DB_HOST: string;
   DB_PORT: number;
   DB_USERNAME: string;
@@ -13,6 +15,8 @@ interface EnvVars {
 const envsSchema = joi
   .object<EnvVars>({
     API_PORT: joi.number().default(3000),
+    JWT_SECRET: joi.string().required(),
+    JWT_EXPIRATION: joi.number().default(3600),
     DB_HOST: joi.string().required(),
     DB_PORT: joi.number().required(),
     DB_USERNAME: joi.string().required(),
@@ -33,6 +37,8 @@ const envVars: EnvVars = value;
 
 export const envs = {
   apiPort: envVars.API_PORT,
+  jwtSecret: envVars.JWT_SECRET,
+  jwtExpiration: envVars.JWT_EXPIRATION,
   dbHost: envVars.DB_HOST,
   dbPort: envVars.DB_PORT,
   dbUsername: envVars.DB_USERNAME,

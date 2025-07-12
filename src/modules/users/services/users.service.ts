@@ -55,4 +55,18 @@ export class UsersService {
       throw new InternalServerErrorException('Error al crear el usuario');
     }
   }
+
+  async findByEmail(email: string): Promise<User | null> {
+    try {
+      return await this.usersRepository.findOne({
+        where: { email },
+      });
+    } catch (error) {
+      this.logger.error(
+        `Error al buscar usuario por email: ${email}, error: ${error.message}`,
+        error.stack,
+      );
+      throw new InternalServerErrorException('Error al buscar el usuario');
+    }
+  }
 }
