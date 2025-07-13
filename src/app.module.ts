@@ -7,6 +7,7 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
 import { RestaurantsModule } from './modules/restaurants/restaurants.module';
+import { UserActionsModule } from './modules/user-actions/user-actions.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { RestaurantsModule } from './modules/restaurants/restaurants.module';
     UsersModule,
     AuthModule,
     RestaurantsModule,
+    UserActionsModule,
   ],
   controllers: [],
   providers: [

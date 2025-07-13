@@ -1,8 +1,10 @@
+import { UserAction } from 'src/modules/user-actions/entities/user-action.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   Index,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -10,7 +12,7 @@ import {
 @Entity({
   name: 'users',
 })
-@Index(['email']) 
+@Index(['email'])
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -44,4 +46,7 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @OneToMany(() => UserAction, (action) => action.user)
+  actions: UserAction[];
 }

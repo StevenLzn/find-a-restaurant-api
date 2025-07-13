@@ -16,11 +16,21 @@ export class ResponseInterceptor<T>
     next: CallHandler,
   ): Observable<ApiResponse<T>> {
     return next.handle().pipe(
-      map((data) => ({
-        success: true,
-        data,
-        timestamp: new Date(),
-      })),
+      map((response) => {
+        if (response && response.data && response.meta) {
+          return {
+            success: true,
+            data: response.data,
+            meta: response.meta,
+            timestamp: new Date(),
+          };
+        }
+        return {
+          success: true,
+          data: response,
+          timestamp: new Date(),
+        };
+      }),
     );
   }
 }

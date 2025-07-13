@@ -9,6 +9,11 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserActionsService } from 'src/modules/user-actions/services/user-actions.service';
+import { UserActionLogBuilder } from 'src/modules/user-actions/builders/user-action-log.builder';
+import { UserActionType } from 'src/common/enums/user-action-type.enum';
+import { AppResources } from 'src/common/enums/app-resources.enum';
+import { ResponseStatus } from 'src/common/enums/response-status.enum';
 
 @Injectable()
 export class UsersService {
@@ -16,9 +21,15 @@ export class UsersService {
   private readonly SALT_ROUNDS = 10;
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
+    private readonly userActionsService: UserActionsService,
   ) {}
 
   async signup(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
+    const { password, ...createUserWithoutPassword } = createUserDto;
+    const logBuilder = new UserActionLogBuilder(
+      UserActionType.SIGNUP,
+      AppResources.USERS,
+    ).setRequestBody(JSON.stringify(createUserWithoutPassword));
     try {
       const userExists = await this.usersRepository.findOne({
         where: { email: createUserDto.email },
@@ -41,7 +52,12 @@ export class UsersService {
       const newUserEntityInstance = this.usersRepository.create(userData);
       const savedUser = await this.usersRepository.save(newUserEntityInstance);
       const { password, ...userWithoutPassword } = savedUser;
-
+      await this.userActionsService.logAction(
+        logBuilder
+          .setUserId(userWithoutPassword.id)
+          .setStatus(ResponseStatus.SUCCESS)
+          .build(),
+      );
       this.logger.log(`Usuario creado exitosamente: ${savedUser.id}`);
       return userWithoutPassword;
     } catch (error) {
@@ -50,8 +66,18 @@ export class UsersService {
         error.stack,
       );
       if (error instanceof ConflictException) {
+        await this.userActionsService.logAction(
+          logBuilder.setUserId(null).setStatus(ResponseStatus.CONFLICT).build(),
+        );
         throw error;
       }
+
+      await this.userActionsService.logAction(
+        logBuilder
+          .setUserId(null)
+          .setStatus(ResponseStatus.INTERNAL_SERVER_ERROR)
+          .build(),
+      );
       throw new InternalServerErrorException('Error al crear el usuario');
     }
   }

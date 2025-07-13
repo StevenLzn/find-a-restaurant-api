@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { RestaurantsController } from './controllers/restaurants.controller';
 import { RestaurantsService } from './services/restaurants.service';
-import { AuthModule } from '../auth/auth.module';
+import { UserActionsModule } from '../user-actions/user-actions.module';
+import { CommonModule } from 'src/common/common.module';
 
 @Module({
-  imports: [AuthModule],
+  imports: [CommonModule, UserActionsModule],
   controllers: [RestaurantsController],
   providers: [RestaurantsService],
   exports: [RestaurantsService],
