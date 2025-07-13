@@ -35,9 +35,9 @@ export class UserAction {
   @Column({ type: 'text', nullable: true })
   request_params?: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ length: 50 })
   resource: string;
 
-  @Column({ type: 'varchar', length: 20, nullable: true })
+  @Column({ length: 20 })
   status?: string;
 }

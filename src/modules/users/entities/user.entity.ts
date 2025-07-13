@@ -3,7 +3,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Index,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -12,22 +11,29 @@ import {
 @Entity({
   name: 'users',
 })
-@Index(['email'])
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
-  @Index()
+  @Column({
+    unique: true,
+    length: 150,
+  })
   email: string;
 
-  @Column()
+  @Column({
+    length: 100,
+  })
   password: string;
 
-  @Column()
+  @Column({
+    length: 50,
+  })
   name: string;
 
-  @Column()
+  @Column({
+    length: 50,
+  })
   lastname: string;
 
   @CreateDateColumn({
@@ -44,7 +50,9 @@ export class User {
   })
   updatedAt: Date;
 
-  @Column({ default: true })
+  @Column({
+    default: true,
+  })
   isActive: boolean;
 
   @OneToMany(() => UserAction, (action) => action.user)

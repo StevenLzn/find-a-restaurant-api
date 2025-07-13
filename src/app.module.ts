@@ -27,6 +27,8 @@ import { UserActionsModule } from './modules/user-actions/user-actions.module';
       password: envs.dbPassword,
       database: envs.dbName,
       autoLoadEntities: true,
+      entities: [__dirname + '/../**/*.entity.{js,ts}'],
+      synchronize: true,
     }),
     UsersModule,
     AuthModule,

@@ -15,8 +15,6 @@ export class UserActionsService {
   async logAction(
     createUserActionLog: CreateUserActionLog,
   ): Promise<UserAction> {
-    console.log(createUserActionLog);
-    
     const userAction = this.userActionsRepo.create({
       user_id: createUserActionLog.userId,
       action: createUserActionLog.action,
@@ -25,8 +23,6 @@ export class UserActionsService {
       request_params: createUserActionLog.request_params,
       status: createUserActionLog.status,
     });
-    console.log(userAction);
-    
     return this.userActionsRepo.save(userAction);
   }
 
