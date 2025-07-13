@@ -20,13 +20,16 @@ export class AuthService {
   ) {}
 
   async login(loginDto: LoginDto) {
+    // Se busca al usuario por email
     const user = await this.usersService.findByEmail(loginDto.email);
     const { password, ...loginDataWithoutPassword } = loginDto;
+    // Se construye parte del log de acción del usuario
     const logBuilder = new UserActionLogBuilder(
       UserActionType.LOGIN,
       AppResources.AUTH,
     ).setRequestBody(JSON.stringify(loginDataWithoutPassword));
 
+    // Si el usuario no exsite, se termina de construir el log, se guarda y se lanza una excepción
     if (!user) {
       await this.userActionsService.logAction(
         logBuilder
@@ -42,6 +45,7 @@ export class AuthService {
       user.password,
     );
 
+    // Si las constrañas no coinciden, se termina de construir el log, se guarda y se lanza una excepción
     if (!isValidPassword) {
       await this.userActionsService.logAction(
         logBuilder
@@ -52,8 +56,10 @@ export class AuthService {
       throw new UnauthorizedException('Credenciales inválidas');
     }
 
+    // Payload del JWT
     const payload = { sub: user.id, email: user.email };
 
+    // Se guarda el log de acción del usuario, definiendo el usuario y el estado exitoso
     await this.userActionsService.logAction(
       logBuilder.setUserId(user.id).setStatus(ResponseStatus.SUCCESS).build(),
     );
@@ -70,6 +76,7 @@ export class AuthService {
   }
 
   async logout(userId: string) {
+    // Se construye la acción de log de usuario para el cierre de sesión y se guarda
     await this.userActionsService.logAction(
       new UserActionLogBuilder(UserActionType.LOGOUT, AppResources.AUTH)
         .setStatus(ResponseStatus.SUCCESS)

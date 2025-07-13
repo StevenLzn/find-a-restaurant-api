@@ -7,6 +7,9 @@ import {
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { map, Observable } from 'rxjs';
 
+// Interceptor para formatear las respuestas de la API
+// Este interceptor envuelve las respuestas en un objeto estándar
+// que incluye un campo de éxito, los datos y una marca de tiempo.
 @Injectable()
 export class ResponseInterceptor<T>
   implements NestInterceptor<T, ApiResponse<T>>

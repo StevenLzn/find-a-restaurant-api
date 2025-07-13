@@ -4,10 +4,14 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { envs } from './config/envs';
 
+// TODO: implementar pruebas automatizadas.
+// TODO: Implementar docker
 async function bootstrap() {
   const logger = new Logger('main bootstrap');
   const app = await NestFactory.create(AppModule);
 
+  // Configuración de validaciones globales para los DTOs
+  // Se usa ValidationPipe para validar los DTOs y transformar los datos entrantes
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -16,6 +20,7 @@ async function bootstrap() {
     }),
   );
 
+  // Configuración del swagger para la documentación de la API
   const config = new DocumentBuilder()
     .setTitle('Find a restaurant - API')
     .setDescription('API documentation for the Find a Restaurant application')

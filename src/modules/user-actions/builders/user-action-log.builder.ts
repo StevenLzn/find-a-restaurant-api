@@ -1,6 +1,8 @@
 import { UserActionType } from 'src/common/enums/user-action-type.enum';
 import { ResponseStatus } from 'src/common/enums/response-status.enum';
 
+// Builder para crear logs de acciones de usuario
+// Este builder permite construir un objeto de log con los detalles de la acción del usuario,
 export class UserActionLogBuilder {
   private userId: string | null = null;
   private action: UserActionType;

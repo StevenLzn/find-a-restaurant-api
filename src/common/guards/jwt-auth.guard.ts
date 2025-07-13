@@ -8,6 +8,9 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { envs } from 'src/config/envs';
 
+// Guard para proteger rutas con JWT
+// Este guard verifica la validez del token JWT en la cabecera Authorization
+// y extrae el payload del usuario autenticado.
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}

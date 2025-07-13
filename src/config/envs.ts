@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import * as joi from 'joi';
 
+// Este archivo carga, valida y exporta las variables de entorno necesarias para la aplicación.
 interface EnvVars {
   API_PORT: number;
   JWT_SECRET: string;

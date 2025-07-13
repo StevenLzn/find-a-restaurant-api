@@ -26,32 +26,38 @@ export class UsersService {
 
   async signup(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
     const { password, ...createUserWithoutPassword } = createUserDto;
+    // Se construye parte del log de acción del usuario
     const logBuilder = new UserActionLogBuilder(
       UserActionType.SIGNUP,
       AppResources.USERS,
     ).setRequestBody(JSON.stringify(createUserWithoutPassword));
     try {
+      // Verifica si el usuario ya existe por email
       const userExists = await this.usersRepository.findOne({
         where: { email: createUserDto.email },
       });
 
+      // Si existe se lanza una excepción de conflicto
       if (userExists) {
         throw new ConflictException('El email ya está registrado');
       }
 
+      // Se hace hash de la contraseña
       const hashedPassword = await bcrypt.hash(
         createUserDto.password,
         this.SALT_ROUNDS,
       );
 
+      // Se crea objeto con la contraseña hasheada
       const userData = {
         ...createUserDto,
         password: hashedPassword,
       };
 
-      const newUserEntityInstance = this.usersRepository.create(userData);
-      const savedUser = await this.usersRepository.save(newUserEntityInstance);
+      const newUserEntityInstance = this.usersRepository.create(userData); // Crea una nueva instancia de la entidad User
+      const savedUser = await this.usersRepository.save(newUserEntityInstance); // Guarda la entidad en la base de datos
       const { password, ...userWithoutPassword } = savedUser;
+      // Se termina de construir el log de acción del usuario, en este caso exitosa y se guarda
       await this.userActionsService.logAction(
         logBuilder
           .setUserId(userWithoutPassword.id)
@@ -65,6 +71,8 @@ export class UsersService {
         `Error al crear usuario: ${error.message}`,
         error.stack,
       );
+
+      // Si el error es de conflicto, se termina de construir el log de acción del usuario y se guarda
       if (error instanceof ConflictException) {
         await this.userActionsService.logAction(
           logBuilder.setUserId(null).setStatus(ResponseStatus.CONFLICT).build(),
@@ -72,6 +80,7 @@ export class UsersService {
         throw error;
       }
 
+      // En caso de error interno del servidor, se termina de construir el log de acción del usuario y se guarda
       await this.userActionsService.logAction(
         logBuilder
           .setUserId(null)

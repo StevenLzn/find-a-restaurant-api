@@ -15,6 +15,7 @@ export class UserActionsService {
   async logAction(
     createUserActionLog: CreateUserActionLog,
   ): Promise<UserAction> {
+    // Crea la entidad en memoria
     const userAction = this.userActionsRepo.create({
       user_id: createUserActionLog.userId,
       action: createUserActionLog.action,
@@ -23,9 +24,12 @@ export class UserActionsService {
       request_params: createUserActionLog.request_params,
       status: createUserActionLog.status,
     });
+
+    // Guarda la entidad en la base de datos
     return this.userActionsRepo.save(userAction);
   }
 
+  // Lista todas las acciones de usuario con paginación, independientemente del usuario que la haya hecho
   async listAllActions(pagination: PaginationDto) {
     const { page = 1, limit = 20 } = pagination;
     const [data, total] = await this.userActionsRepo.findAndCount({
@@ -43,6 +47,7 @@ export class UserActionsService {
     };
   }
 
+  // Lista todas las acciones de un usuario específico, consultando por su ID
   async listActionsByUser(userId: string, pagination: PaginationDto) {
     if (!userId) {
       throw new BadRequestException('El id del usuario es requerido');

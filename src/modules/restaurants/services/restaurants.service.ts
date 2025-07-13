@@ -27,6 +27,7 @@ export class RestaurantsService {
     params: NearbySearchParams,
     userId: string,
   ): Promise<Restaurant[]> {
+    // Se construye parte del log de acción del usuario
     const logBuilder = new UserActionLogBuilder(
       UserActionType.GET_NEARBY_RESTAURANTS,
       AppResources.RESTAURANTS,
@@ -36,10 +37,13 @@ export class RestaurantsService {
 
     try {
       let strategy: NearbySearchStrategy;
-
+      // Se determina la estrategia de búsqueda según los parámetros proporcionados
+      // Se usa el patrón de estrategia para encapsular las diferentes lógicas de búsqueda
       if (params.city) {
+        // Si se proporciona una ciudad, se usa CityNearbySearchStrategy
         strategy = new CityNearbySearchStrategy();
       } else if (params.lat && params.lng) {
+        // Si se proporcionan coordenadas, se usa CoordinatesNearbySearchStrategy
         strategy = new CoordinatesNearbySearchStrategy();
       } else {
         throw new BadRequestException(
@@ -49,8 +53,11 @@ export class RestaurantsService {
       this.logger.log(
         `Busqueda de restaurantes con parámetros: ${JSON.stringify(params)}`,
       );
+
+      // Se realiza la búsqueda de restaurantes usando la estrategia seleccionada
       const restaurants = await strategy.search(params);
 
+      // Se termina de construir el log de acción del usuario, en este caso exitosa y se guarda
       await this.userActionsService.logAction(
         logBuilder.setStatus(ResponseStatus.SUCCESS).build(),
       );
@@ -62,6 +69,7 @@ export class RestaurantsService {
         error.stack,
       );
 
+      // En caso de error http, se termina de construir el log de acción del usuario y se guarda
       if (error instanceof HttpException) {
         await this.userActionsService.logAction(
           logBuilder.setStatus(ResponseStatus.ERROR).build(),
@@ -69,6 +77,7 @@ export class RestaurantsService {
         throw error;
       }
 
+      // En caso de error del proveedor, se termina de construir el log de acción del usuario y se guarda
       if (error.message?.includes('Google')) {
         await this.userActionsService.logAction(
           logBuilder.setStatus(ResponseStatus.EXTERNAL_SERVICE_ERROR).build(),
@@ -78,6 +87,7 @@ export class RestaurantsService {
         );
       }
 
+      // En caso de error genérico, se termina de construir el log de acción del usuario y se guarda
       await this.userActionsService.logAction(
         logBuilder.setStatus(ResponseStatus.INTERNAL_SERVER_ERROR).build(),
       );
