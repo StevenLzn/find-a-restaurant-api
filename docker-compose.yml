@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postres:1234@db:5432/find-a-restaurant
+    env_file:
+      - .env
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: find-a-restaurant
+    ports:
+      - "5432:5432"
