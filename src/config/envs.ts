@@ -10,6 +10,9 @@ interface EnvVars {
   DB_USERNAME: string;
   DB_PASSWORD: string;
   DB_NAME: string;
+  GOOGLE_API_KEY: string;
+  GOOGLE_PLACES_URL: string;
+  GOOGLE_GEOCODING_URL: string;
 }
 
 const envsSchema = joi
@@ -22,6 +25,9 @@ const envsSchema = joi
     DB_USERNAME: joi.string().required(),
     DB_PASSWORD: joi.string().required(),
     DB_NAME: joi.string().required(),
+    GOOGLE_API_KEY: joi.string().required(),
+    GOOGLE_PLACES_URL: joi.string().uri().required(),
+    GOOGLE_GEOCODING_URL: joi.string().uri().required(),
   })
   .unknown(true);
 
@@ -44,4 +50,7 @@ export const envs = {
   dbUsername: envVars.DB_USERNAME,
   dbPassword: envVars.DB_PASSWORD,
   dbName: envVars.DB_NAME,
+  googleApiKey: envVars.GOOGLE_API_KEY,
+  googlePlacesUrl: envVars.GOOGLE_PLACES_URL,
+  googleGeocodingUrl: envVars.GOOGLE_GEOCODING_URL,
 };
