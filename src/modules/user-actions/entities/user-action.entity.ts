@@ -38,6 +38,6 @@ export class UserAction {
   @Column({ length: 50 })
   resource: string;
 
-  @Column({ length: 20 })
+  @Column({ length: 50 })
   status?: string;
 }
