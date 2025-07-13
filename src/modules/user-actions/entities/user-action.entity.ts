@@ -1,5 +1,5 @@
-import { UserActionType } from 'src/common/enums/user-action-type.enum';
-import { User } from 'src/modules/users/entities/user.entity';
+import { UserActionType } from '../../../../src/common/enums/user-action-type.enum';
+import { User } from '../../../../src/modules/users/entities/user.entity';
 import {
   Column,
   Entity,

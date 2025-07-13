@@ -4,7 +4,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { envs } from './config/envs';
 
-// TODO: implementar pruebas automatizadas.
 // TODO: Implementar docker
 async function bootstrap() {
   const logger = new Logger('main bootstrap');

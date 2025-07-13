@@ -2,7 +2,7 @@ import axios from 'axios';
 import { NearbySearchParams } from '../interfaces/nearby-search-params.interface';
 import { Restaurant } from '../interfaces/restaurant.interface';
 import { NearbySearchStrategy } from './nearby-search.strategy';
-import { envs } from 'src/config/envs';
+import { envs } from '../../../../src/config/envs';
 import { BadRequestException } from '@nestjs/common';
 
 // Esta estrategia busca restaurantes cercanos a unas coordenadas específicas utilizando la API de Google Places.

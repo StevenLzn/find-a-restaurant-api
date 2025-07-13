@@ -9,11 +9,11 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserActionsService } from 'src/modules/user-actions/services/user-actions.service';
-import { UserActionLogBuilder } from 'src/modules/user-actions/builders/user-action-log.builder';
-import { UserActionType } from 'src/common/enums/user-action-type.enum';
-import { AppResources } from 'src/common/enums/app-resources.enum';
-import { ResponseStatus } from 'src/common/enums/response-status.enum';
+import { UserActionsService } from '../../../../src/modules/user-actions/services/user-actions.service';
+import { UserActionLogBuilder } from '../../../../src/modules/user-actions/builders/user-action-log.builder';
+import { UserActionType } from '../../../../src/common/enums/user-action-type.enum';
+import { AppResources } from '../../../../src/common/enums/app-resources.enum';
+import { ResponseStatus } from '../../../../src/common/enums/response-status.enum';
 
 @Injectable()
 export class UsersService {

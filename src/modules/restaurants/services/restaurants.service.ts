@@ -11,11 +11,11 @@ import { CoordinatesNearbySearchStrategy } from '../strategies/coordinates-nearb
 import { NearbySearchParams } from '../interfaces/nearby-search-params.interface';
 import { Restaurant } from '../interfaces/restaurant.interface';
 import { NearbySearchStrategy } from '../strategies/nearby-search.strategy';
-import { UserActionsService } from 'src/modules/user-actions/services/user-actions.service';
-import { UserActionLogBuilder } from 'src/modules/user-actions/builders/user-action-log.builder';
-import { UserActionType } from 'src/common/enums/user-action-type.enum';
-import { ResponseStatus } from 'src/common/enums/response-status.enum';
-import { AppResources } from 'src/common/enums/app-resources.enum';
+import { UserActionsService } from '../../../../src/modules/user-actions/services/user-actions.service';
+import { UserActionLogBuilder } from '../../../../src/modules/user-actions/builders/user-action-log.builder';
+import { UserActionType } from '../../../../src/common/enums/user-action-type.enum';
+import { ResponseStatus } from '../../../../src/common/enums/response-status.enum';
+import { AppResources } from '../../../../src/common/enums/app-resources.enum';
 
 @Injectable()
 export class RestaurantsService {

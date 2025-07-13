@@ -16,7 +16,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { AuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { AuthGuard } from '../../../../src/common/guards/jwt-auth.guard';
 import { RestaurantsService } from '../services/restaurants.service';
 import { NearbyRestaurantsQueryDto } from '../dto/nearby-restaurants-query.dto';
 

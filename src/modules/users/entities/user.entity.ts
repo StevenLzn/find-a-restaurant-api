@@ -1,4 +1,4 @@
-import { UserAction } from 'src/modules/user-actions/entities/user-action.entity';
+import { UserAction } from '../../../../src/modules/user-actions/entities/user-action.entity';
 import {
   Column,
   CreateDateColumn,

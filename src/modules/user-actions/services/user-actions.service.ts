@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserAction } from '../entities/user-action.entity';
 import { CreateUserActionLog } from '../interfaces/create-user-action-log.interface';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { PaginationDto } from '../../../../src/common/dto/pagination.dto';
 
 @Injectable()
 export class UserActionsService {

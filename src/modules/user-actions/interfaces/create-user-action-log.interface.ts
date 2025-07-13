@@ -1,5 +1,5 @@
-import { ResponseStatus } from 'src/common/enums/response-status.enum';
-import { UserActionType } from 'src/common/enums/user-action-type.enum';
+import { ResponseStatus } from '../../../../src/common/enums/response-status.enum';
+import { UserActionType } from '../../../../src/common/enums/user-action-type.enum';
 
 export interface CreateUserActionLog {
   userId: string | null;

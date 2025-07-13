@@ -3,11 +3,11 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../../users/services/users.service';
 import { LoginDto } from '../dto/login.dto';
 import * as bcrypt from 'bcrypt';
-import { UserActionsService } from 'src/modules/user-actions/services/user-actions.service';
-import { UserActionType } from 'src/common/enums/user-action-type.enum';
-import { ResponseStatus } from 'src/common/enums/response-status.enum';
-import { UserActionLogBuilder } from 'src/modules/user-actions/builders/user-action-log.builder';
-import { AppResources } from 'src/common/enums/app-resources.enum';
+import { UserActionsService } from '../../../../src/modules/user-actions/services/user-actions.service';
+import { UserActionType } from '../../../../src/common/enums/user-action-type.enum';
+import { ResponseStatus } from '../../../../src/common/enums/response-status.enum';
+import { UserActionLogBuilder } from '../../../../src/modules/user-actions/builders/user-action-log.builder';
+import { AppResources } from '../../../../src/common/enums/app-resources.enum';
 
 @Injectable()
 export class AuthService {

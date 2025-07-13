@@ -3,9 +3,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './services/auth.service';
 import { AuthController } from './controllers/auth.controller';
 import { UsersModule } from '../users/users.module';
-import { envs } from 'src/config/envs';
+import { envs } from '../../../src/config/envs';
 import { UserActionsModule } from '../user-actions/user-actions.module';
-import { CommonModule } from 'src/common/common.module';
+import { CommonModule } from '../../../src/common/common.module';
 
 @Module({
   imports: [

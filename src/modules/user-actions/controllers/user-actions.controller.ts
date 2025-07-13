@@ -1,7 +1,7 @@
 import { Controller, Get, Query, UseGuards, Param } from '@nestjs/common';
-import { AuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { AuthGuard } from '../../../../src/common/guards/jwt-auth.guard';
 import { UserActionsService } from '../services/user-actions.service';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { PaginationDto } from '../../../../src/common/dto/pagination.dto';
 import {
   ApiOperation,
   ApiParam,

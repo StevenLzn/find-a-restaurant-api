@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { envs } from 'src/config/envs';
+import { envs } from '../../../src/config/envs';
 
 // Guard para proteger rutas con JWT
 // Este guard verifica la validez del token JWT en la cabecera Authorization
