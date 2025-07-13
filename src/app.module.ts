@@ -14,8 +14,8 @@ import { UserActionsModule } from './modules/user-actions/user-actions.module';
     ThrottlerModule.forRoot({
       throttlers: [
         {
-          ttl: minutes(1), // 60 segundos en milisegundos
-          limit: 10, // Máximo 10 solicitudes por ventana
+          ttl: minutes(1), // Cada minuto
+          limit: 10, // El usuario puede hacer máximo 10 peticiones por minuto
         },
       ],
     }),

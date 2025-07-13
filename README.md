@@ -1,98 +1,41 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Prueba técnica tyba
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este proyecto se desarrolla para completar la prueba técnica de **tyba**. El lenguaje usado fue **Node.js** con el framework **NestJS** y se utilizó **PostgreSQL** mediante el ORM **TypeORM**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Requisitos
 
-## Description
+- Node.js
+- npm
+- Archivo `.env` con las variables de entorno copiadas de `.env.template`
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Decisiones técnicas
 
-## Project setup
+- Se usó **TypeORM** ya que brinda una implementación completa para PostgreSQL y tiene excelente practicidad de uso con diferentes bases de datos.
+- La arquitectura está modularizada, presentando una navegación sencilla donde cada funcionalidad tiene su respectivo módulo; cada módulo cuenta con sus DTO, entities, services, controllers, etc.
+- Se agregaron validaciones para las variables de entorno para asegurar que todas las necesarias sean provistas.
+- La documentación del REST API fue realizada con **Swagger**, herramienta estándar en la industria que facilita la documentación de endpoints con su path, descripción, inputs y outputs. La documentación se encuentra en: `http://localhost:3000/api`
+- La seguridad se implementó mediante **JWT**, verificando la validez del token en los endpoints que requieren autenticación.
+- Se agregó un pipe global para las validaciones de los DTO, facilitando la conversión y validación de tipos de datos en los parámetros y cuerpos de las solicitudes.
+- Se añadió un throttler global para limitar a 10 peticiones por minuto por usuario, ayudando a bloquear ataques de fuerza bruta contra el REST API.
+- Se usó el patrón **strategy** para el manejo de búsqueda de restaurantes, permitiendo búsquedas por ciudad o coordenadas, cada una con lógica de consulta diferente. Este patrón permite flexibilidad para crear o modificar estrategias de consulta sin afectar otras.
+- El proveedor elegido para la consulta de restaurantes fue **Google**, utilizando Google Places para consultar restaurantes y Google Geocoding para obtener coordenadas de la ciudad.
+- La auditoría de acciones de los usuarios se implementó mediante un **builder**, construyendo el objeto de auditoría a medida que ocurren acciones dentro del código y persistiendo en la base de datos una vez completo.
+- Se creó un script para crear la base de datos si no existe, y el ORM crea las tablas si estas no existen.
+
+## Comando para levantar la aplicación
 
 ```bash
-$ npm install
+npm i
+npm run start:dev
 ```
 
-## Compile and run the project
+## Comando para ejecutar las pruebas
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run test
 ```
 
-## Run tests
+## Consideraciones
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- Aunque los archivos de Docker fueron creados, no se alcanzó a probar debido a problemas en la instalación de Docker Desktop  en el equipo donde se desarrolló la prueba.
+- La **API key** de Google es provista en el correo de respuesta.
